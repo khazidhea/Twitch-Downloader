@@ -1,9 +1,9 @@
-function add_download(index, video, array) { 
-    var url = 'http://api.justin.tv/broadcast/by_archive/' + video.id + '.json';
-    console.log(url);
+if(!(window.jQuery && window.jQuery.fn.jquery == '1.3.2')) {var s = document.createElement('script');s.setAttribute('src', 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');s.setAttribute('type', 'text/javascript');document.getElementsByTagName('head')[0].appendChild(s);}
+
+function add_download_links(video_id) {
+    var url = 'http://api.justin.tv/broadcast/by_archive/' + video_id + '.json';
+    var video = $('#' + video_id);
     var video_meta = $('.video_meta', video);
-    
-    
     $.getJSON(url, function(data) {
         var video_file_urls = [];
         for (var i = 0; i < data.length; ++i) {
@@ -13,7 +13,6 @@ function add_download(index, video, array) {
         var columns = 4;
         var rows = video_file_urls.length / columns;
         var table = '<table class="download_table">';
-        table += '<th>Download:</th>';
         for (var i = 0; i < rows; ++i) {
             table += '<tr>';
             for (var j = 0; j < columns; ++j) {
@@ -32,8 +31,17 @@ function add_download(index, video, array) {
 
         video_meta.append(table);
     });
-    
+}
+
+function add_download_button(index, video, array) { 
+    var video_meta = $('.video_meta', video);
+    var download_button = '<a>Get download links!</a>';
+    download_button = $(download_button);
+    download_button.click(function() {
+        add_download_links(video.id);
+    });
+    video_meta.append(download_button);
 }
 
 videos = $('.video');
-videos.map(add_download);
+videos.map(add_download_button);

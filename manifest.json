@@ -5,8 +5,7 @@
   "description": "Downloads videos from twitch",
   "content_scripts": [
     {
-      "matches": ["http://www.twitch.tv/*/videos*",
-        			    "http://twitch.tv/*/videos*", 
+      "matches": ["http://www.twitch.tv/*", 
                   "http://api.justin.tv/*"],
       "js": ["jquery.js", "download.js"],
       "css": ["download.css"]
